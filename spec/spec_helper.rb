@@ -1,0 +1,1 @@
+require "wp2tumblr"
