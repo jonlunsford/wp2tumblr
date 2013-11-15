@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jon@capturethecastle.net"]
   spec.description   = %q{A CLI tool}
   spec.summary       = %q{Import wordpress xml files into Tumblr via the Tumblr api}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/jonlunsford/wp2tumblr"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

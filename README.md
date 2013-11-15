@@ -1,6 +1,6 @@
 # Wp2tumblr
 
-TODO: Write a gem description
+A CLI tool to import wordpress xml files into Tumblr via the Tumblr api
 
 ## Installation
 
@@ -17,8 +17,10 @@ Or install it yourself as:
     $ gem install wp2tumblr
 
 ## Usage
-NOTE: This gem is under active development.
 TODO: Write usage instructions here
+
+NOTE: This gem is under active development.
+
 
 ## Contributing
 
