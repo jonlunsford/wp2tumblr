@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Wp2tumblr::VERSION
   spec.authors       = ["jonlunsford"]
   spec.email         = ["jon@capturethecastle.net"]
-  spec.description   = %q{A CLI tool}
-  spec.summary       = %q{Import wordpress xml files into Tumblr via the Tumblr api}
+  spec.description   = %q{A CLI tool to import wordpress xml files into Tumblr}
+  spec.summary       = %q{This gem utilizes the Tumblr api to create posts from a wordpress post XML export file.}
   spec.homepage      = "https://github.com/jonlunsford/wp2tumblr"
   spec.license       = "MIT"
 
