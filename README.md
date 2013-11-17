@@ -7,7 +7,7 @@ A CLI tool to import wordpress xml files into Tumblr via the Tumblr api
     $ gem install wp2tumblr
 
 ## Usage
-This gem is dependant on the `~/.tumblr` config file that the [tumblr_client gem]('https://github.com/tumblr/tumblr_client') generates. If you have not previously installed the [tumblr_client gem]('https://github.com/tumblr/tumblr_client') and have run the [irb console setup](https://github.com/tumblr/tumblr_client#the-irb-console) you will be prompted to do so upon first use of this gem.
+This gem is dependant on the `~/.tumblr` config file that the [tumblr_client gem](https://github.com/tumblr/tumblr_client) generates. If you have not previously installed the [tumblr_client gem](https://github.com/tumblr/tumblr_client) and have run the [irb console setup](https://github.com/tumblr/tumblr_client#the-irb-console) you will be prompted to do so upon first use of this gem.
 
 ### Import
 Once you have completed the config process simply run the following command:
