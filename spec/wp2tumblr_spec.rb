@@ -1,5 +1,5 @@
-# encoding: utf-8
 require 'spec_helper'
+
 describe Wp2tumblr do
   context "Dependencies" do
     it "depends on Nokogiri" do
@@ -21,33 +21,60 @@ describe Wp2tumblr::Wordpress do
 
   describe ".parse_xml" do
     it "delegates parsing of just post content" do
-      puts Wp2tumblr::Wordpress.parse_posts
-      # parsed_params = Wp2tumblr::Wordpress.parse_posts(file)
-      # parsed_params[0][:title].should eq("Post Title")
+      parsed_params = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+      parsed_params[0][:title].should eq("Post Title")
     end
   end
 
-  # describe ".parse_xml" do
-  #   it "delegates parsing of just post categories" do
-  #     parsed_params = Wordpress.parse_xml(file, :categories)
-  #     parsed_params[0].should eq("Category 1")
-  #   end
-  # end
+  describe ".parse_xml" do
+    it "delegates parsing of just post categories" do
+      parsed_params = Wp2tumblr::Wordpress.parse_xml(file, :categories)
+      parsed_params[0].should eq("Category 1")
+    end
+  end
 
-  # describe ".parse_xml" do 
-  #   it "delegates parsing of just post tags" do 
-  #     parsed_params = Wordpress.parse_xml(file, :tags)
-  #     parsed_params[0].should eq("Tag 1")
-  #   end
-  # end
+  describe ".parse_xml" do 
+    it "delegates parsing of just post tags" do 
+      parsed_params = Wp2tumblr::Wordpress.parse_xml(file, :tags)
+      parsed_params[0].should eq("Tag 1")
+    end
+  end
 
-  # describe ".parse_xml" do 
-  #   it "Parses posts, tags, categories, and comments together" do 
-  #     parsed_params = Wordpress.parse_xml(file, :all)
-  #     parsed_params[0][:title].should eq("Post Title")
-  #     parsed_params[0][:tags][0].should eq("Tag 1")
-  #     parsed_params[0][:categories][0].should eq("Category 1")
-  #     parsed_params[0][:comments][0][:author].should eq("Test Commenter")
-  #   end
-  # end
+  describe ".parse_xml" do 
+    it "Parses posts, tags, categories, and comments together" do 
+      parsed_params = Wp2tumblr::Wordpress.parse_xml(file, :all)
+      parsed_params[0][:title].should eq("Post Title")
+      parsed_params[0][:tags][0].should eq("Tag 1")
+      parsed_params[0][:categories][0].should eq("Category 1")
+      parsed_params[0][:comments][0][:author].should eq("Test Commenter")
+    end
+  end
+end
+
+describe Wp2tumblr::TumblrClient do
+  # config.yml is excluded from this repo, you must provide your own keys for deveopment purposes.
+  let(:config) { YAML.load_file(File.dirname(__FILE__) + "/wp2tumblr/config_spec.yml") }
+  let(:client) { Wp2tumblr::TumblrClient.new(config["tumblr_consumer_key"], config["tumblr_secret_key"], config["oauth_token"], config["oauth_token_secret"]) }
+  let(:file) { File.open(File.dirname(__FILE__) + "/wp2tumblr/wordpress_format.xml") }
+
+  describe "initialize" do
+    it "should return an instance of itself" do
+      client.should_not be_nil
+    end
+  end
+
+  describe "authenticate" do
+    it "should complete the oauth protocol with Tumblr" do
+      tumblr_client = client.connect
+      tumblr_client.should_not be_nil
+    end
+  end
+
+  describe "text_posts" do
+    it "should post text posts to the Tumblr api" do 
+      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+      client.connect
+      client.text_posts(posts)
+    end
+  end
 end

@@ -1,9 +1,8 @@
-require "wp2tumblr/version"
 require "wp2tumblr/wordpress"
-require "nokogiri"
-require "tumblr_client"
-require "oauth"
+require "wp2tumblr/tumblr_client"
 
 module Wp2tumblr
-  include Wordpress
+  autoload :VERSION, File.join(File.dirname(__FILE__), "wp2tumblr/version");
+
+  include Wp2tumblr::Wordpress
 end

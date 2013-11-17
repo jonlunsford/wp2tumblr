@@ -1,5 +1,8 @@
+require "nokogiri"
+
 module Wp2tumblr
   module Wordpress
+    
     def self.parse_xml(file, type)
       case type
       when :posts
@@ -13,7 +16,7 @@ module Wp2tumblr
       end
     end 
 
-    def parse_posts(file)
+    def self.parse_posts(file)
       items = get_file_contents(file)
       @posts = []
       items.to_enum.with_index(0) do |item, i|
@@ -22,7 +25,7 @@ module Wp2tumblr
       @posts
     end
 
-    def parse_categories(file)
+    def self.parse_categories(file)
       items = get_file_contents(file)
       @categories = []
       items.to_enum.with_index(0) do |item, i| 
@@ -31,7 +34,7 @@ module Wp2tumblr
       @categories
     end
 
-    def parse_tags(file)
+    def self.parse_tags(file)
       items = get_file_contents(file)
       @tags = []
       items.to_enum.with_index(0) do |item, i| 
@@ -40,7 +43,7 @@ module Wp2tumblr
       @tags
     end
 
-    def parse_all(file)
+    def self.parse_all(file)
       items = get_file_contents(file)
       @posts = []
       items.to_enum.with_index(0) do |item, i|
@@ -56,7 +59,7 @@ module Wp2tumblr
       @posts
     end
 
-    def get_post_meta(post, type)
+    def self.get_post_meta(post, type)
       @meta = []
         case type
         when :category
@@ -84,7 +87,9 @@ module Wp2tumblr
       @meta
     end
 
-    def get_file_contents(file)
+    private 
+    
+    def self.get_file_contents(file)
       Nokogiri::XML(file).xpath("//channel//item")
     end 
 
