@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+$:.unshift File.join File.dirname(__FILE__), "..", "lib"
+require "rubygems"
+require "wp2tumblr"
+require "yaml"
+require "irb"
+require "irb/completion"
+require "optparse"
+
+options = {}
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: wp2tumblr COMMAND [OPTIONS]"
+  opt.separator ""
+  opt.separator "Commands"
+  opt.separator "    text: upload posts as type 'text'"
+  opt.separator ""
+  opt.separator "Options"
+
+  opt.on("-b", "--blog_name Blog Name", "The name of the Tumblr blog, ex. 'myblog.tumblr.com'") do |blog_name|
+    options[:blog_name] = blog_name
+  end
+
+  opt.on("-f", "--file XML File", "The absolute path to the wordpress xml export file") do |file|
+    options[:file] = file
+  end
+end
+
+opt_parser.parse!
+
+case ARGV[0]
+when "text"
+  puts "Posting text posts with the options: #{options.inspect}"
+else
+  puts opt_parser
+end
+
+tumblr_config_path = File.join ENV['HOME'], '.tumblr'
+
+if File.exists?(tumblr_config_path)
+
+  config = YAML.load_file tumblr_config_path
+  client = Wp2tumblr::TumblrClient.new(config["consumer_key"], config["consumer_secret"], config["oauth_token"], config["oauth_token_secret"])
+  file = File.open(options[:file]) if File.exists?(options[:file])
+  
+  if client.connect
+    puts "Successfully authenticated with Tumblr!"
+  else 
+    puts "There was an error authenticating with Tumblr. Please check #{tumblr_config_path} and make sure your credentials are correct."
+  end
+
+  if ARGV[0] === "text"
+    if file
+      client.text_posts(options[:blog_name], file)
+    else
+      puts "The path to your XML file is incorrect: #{options[:file]}"
+    end
+  end
+
+else
+  puts "You need to configure your Tumblr api credentials."
+  puts "For more info see: https://github.com/tumblr/tumblr_client#the-irb-console"
+  puts "Starting Tumblr config workflow..."
+  tumblr
+end

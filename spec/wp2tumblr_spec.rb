@@ -74,7 +74,7 @@ describe Wp2tumblr::TumblrClient do
     it "should post text posts to the Tumblr api" do 
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
       client.connect
-      client.text_posts(posts)
+      client.text_posts(config["tumblr_blog_name"] ,posts)
     end
   end
 end

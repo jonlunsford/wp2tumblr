@@ -23,9 +23,12 @@ module Wp2tumblr
       @client = Tumblr::Client.new(:client => :httpclient)
     end
 
-    def text_posts(posts)
+    def text_posts(blog_name, posts)
+      puts "#{posts.count} posts found..."
       posts.each do |post|
-        @client.text("jonlunsford.tumblr.com", {:title => post[:title], :body => post[:content], :date => post[:created_at]})
+        puts "Now posting: #{post[:title]}"
+        @client.text(blog_name, {:title => post[:title], :body => post[:content], :date => post[:created_at]})
+        sleep 2
       end
     end
   end
