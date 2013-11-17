@@ -50,7 +50,8 @@ if File.exists?(tumblr_config_path)
 
   if ARGV[0] === "text"
     if file
-      client.text_posts(options[:blog_name], file)
+      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+      client.text_posts(options[:blog_name], posts)
     else
       puts "The path to your XML file is incorrect: #{options[:file]}"
     end
