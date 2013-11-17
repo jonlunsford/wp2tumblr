@@ -3,8 +3,6 @@ $:.unshift File.join File.dirname(__FILE__), "..", "lib"
 require "rubygems"
 require "wp2tumblr"
 require "yaml"
-require "irb"
-require "irb/completion"
 require "optparse"
 
 options = {}
