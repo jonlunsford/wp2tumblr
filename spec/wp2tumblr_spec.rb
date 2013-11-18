@@ -49,6 +49,14 @@ describe Wp2tumblr::Wordpress do
       parsed_params[0][:comments][0][:author].should eq("Test Commenter")
     end
   end
+
+  describe ".parse_images" do
+    it "counts how many images are in a text post" do
+      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+      post = posts[0][:content]
+      Wp2tumblr::Wordpress.parse_images(post)
+    end
+  end
 end
 
 describe Wp2tumblr::TumblrClient do

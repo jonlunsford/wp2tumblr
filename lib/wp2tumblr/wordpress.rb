@@ -87,6 +87,15 @@ module Wp2tumblr
       @meta
     end
 
+    def self.parse_images(post_content)
+      html = Nokogiri::HTML(post_content)
+      html.css("img").each do |image|
+        encoded_image = Base64.encode64(open(image['src']).read)
+        image['src'] = encoded_image
+      end
+      puts html
+    end
+
     private 
     
     def self.get_file_contents(file)
