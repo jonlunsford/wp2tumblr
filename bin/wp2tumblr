@@ -56,6 +56,7 @@ if File.exists?(tumblr_config_path)
   end
 
 else
+  puts ""
   puts "You need to configure your Tumblr api credentials."
   puts "For more info see: https://github.com/tumblr/tumblr_client#the-irb-console"
   puts "run 'tumblr' then try again"
