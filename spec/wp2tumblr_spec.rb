@@ -51,10 +51,10 @@ describe Wp2tumblr::Wordpress do
   end
 
   describe ".parse_images" do
-    it "counts how many images are in a text post" do
+    it "Encodes images as base64" do
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
       post = posts[0][:content]
-      Wp2tumblr::Wordpress.parse_images(post)
+      Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
     end
   end
 end
