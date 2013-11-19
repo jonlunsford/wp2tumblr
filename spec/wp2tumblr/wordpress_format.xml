@@ -52,7 +52,7 @@
     <dc:creator>testuser</dc:creator>
     <guid isPermaLink="false">http://testblog.com/?p=3199</guid>
     <description></description>
-    <content:encoded><![CDATA[test content]]></content:encoded>
+    <content:encoded><![CDATA[<p>test content</p><div class="center"><img src="http://placekitten.com.s3.amazonaws.com/homepage-samples/200/287.jpg" alt=""/></div><p>test content</p><div class="center"><img src="http://placekitten.com.s3.amazonaws.com/homepage-samples/200/287.jpg" alt=""/></div>]]></content:encoded>
     <excerpt:encoded><![CDATA[]]></excerpt:encoded>
     <wp:post_id>3199</wp:post_id>
     <wp:post_date>2013-03-01 07:59:29</wp:post_date>
@@ -113,7 +113,7 @@
     <dc:creator>testuser</dc:creator>
     <guid isPermaLink="false">http://testblog.com/?p=3199</guid>
     <description></description>
-    <content:encoded><![CDATA[test content]]></content:encoded>
+    <content:encoded><![CDATA[test content <div class="center"><img src="http://placehold.it/120x120" alt=""/></div>]]></content:encoded>
     <excerpt:encoded><![CDATA[]]></excerpt:encoded>
     <wp:post_id>3199</wp:post_id>
     <wp:post_date>2013-03-01 07:59:29</wp:post_date>

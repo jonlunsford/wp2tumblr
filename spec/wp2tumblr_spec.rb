@@ -49,6 +49,14 @@ describe Wp2tumblr::Wordpress do
       parsed_params[0][:comments][0][:author].should eq("Test Commenter")
     end
   end
+
+  describe ".parse_images" do
+    it "Encodes images as base64" do
+      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+      post = posts[0][:content]
+      Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
+    end
+  end
 end
 
 describe Wp2tumblr::TumblrClient do

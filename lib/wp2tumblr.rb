@@ -1,3 +1,4 @@
+require "open-uri"
 require "wp2tumblr/wordpress"
 require "wp2tumblr/tumblr_client"
 
