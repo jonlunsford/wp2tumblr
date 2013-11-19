@@ -90,7 +90,12 @@ module Wp2tumblr
     def self.parse_images(post_content)
       html = Nokogiri::HTML(post_content)
       html.css("img").each do |image|
-        encoded_image = Base64.encode64(open(image['src']) {|io| io.read})
+        begin
+          encoded_image = Base64.encode64(open(image['src']) {|io| io.read})
+        rescue 
+          puts "Error processing image: #{$!}, #{image['src']}"
+          next
+        end
         file_extension = image['src'][/\.[^.]*$/].split('.')[1]
         image['src'] = "data:image/#{file_extension};base64,#{encoded_image}"
       end
