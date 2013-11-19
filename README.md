@@ -34,7 +34,7 @@ Once you have your application token's run:
   
     $ tumblr
 
-You will be prompted to enter your OAuth Consumer key, then your OAuth Consumer Secret. The [tumblr_client gem]('https://github.com/tumblr/tumblr_client') will then output an authorize url, copy and paste that into your browser and your callback url will receive the `oauth_verifier` post containing the OAuth Verifier token. 
+You will be prompted to enter your OAuth Consumer key, then your OAuth Consumer Secret. The [tumblr_client gem]('https://github.com/tumblr/tumblr_client') will then output an authorize url, copy and paste that into your browser and your callback url will receive the `oauth_verifier` post containing the OAuth Verifier token.
 
 ## Contributing
 
