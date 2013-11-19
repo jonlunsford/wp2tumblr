@@ -12,7 +12,7 @@ This gem is dependant on the `~/.tumblr` config file that the [tumblr_client gem
 ### Import
 Once you have completed the config process simply run the following command:
 
-  $ wp2tumblr text -b myblog.tumblr.com -f ~/path/to/my/wordpress/export/file
+    $ wp2tumblr text -b myblog.tumblr.com -f ~/path/to/my/wordpress/export/file
 
 the `text` command tells `wp2tumblr` to import all of the wordpress posts as type "text". Currently "text" is the only option. Since there is no dirrect correlation between wordpress post types and Tumblr post types, text is the default. Future iterations (pull requests are welcome), will allow you to import different Tumblr post types.
 
@@ -35,6 +35,11 @@ Once you have your application token's run:
     $ tumblr
 
 You will be prompted to enter your OAuth Consumer key, then your OAuth Consumer Secret. The [tumblr_client gem]('https://github.com/tumblr/tumblr_client') will then output an authorize url, copy and paste that into your browser and your callback url will receive the `oauth_verifier` post containing the OAuth Verifier token.
+
+
+## Changelog
+- **Version 0.1.0:** Minor Feature, added Base64 encoding of images
+- **Version 0.0.1:** Initial Release
 
 ## Contributing
 
