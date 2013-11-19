@@ -1,3 +1,3 @@
 module Wp2tumblr
-  VERSION = "0.0.1"
+  VERSION = "0.1.0"
 end
