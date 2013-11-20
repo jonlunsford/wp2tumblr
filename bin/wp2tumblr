@@ -6,7 +6,7 @@ require "yaml"
 require "optparse"
 
 options = {}
-site = "http://www.tumblr.com/"
+site = "http://www.tumblr.com"
 
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: wp2tumblr COMMAND [OPTIONS]"
@@ -76,11 +76,17 @@ else
   puts ""
 
   puts request_token.authorize_url
-  puts "After you have received your oauth_verifier, past it below."
+
+  puts "After you have received your oauth_verifier, paste it below."
   puts "OAuth Verifier: "
   api_config[:verifier] = gets.chomp
 
-  access_token = request_token.get_access_token :oauth_verifier=> api_config[:verifier]
+  access_token = request_token.get_access_token :oauth_verifier => api_config[:verifier]
   api_config[:oauth_token] = access_token.token
   api_config[:oauth_token_secret] = access_token.secret
+
+  File.open(tumblr_config_path, "w") do |f|
+    f.write api_config.to_yaml
+  end
+
 end

@@ -50,39 +50,54 @@ describe Wp2tumblr::Wordpress do
     end
   end
 
-  describe ".parse_images" do
-    it "Encodes images as base64" do
-      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
-      post = posts[0][:content]
-      Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
-    end
-  end
+  # describe ".parse_images" do
+  #   it "Encodes images as base64" do
+  #     posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+  #     post = posts[0][:content]
+  #     Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
+  #   end
+  # end
 end
 
 describe Wp2tumblr::TumblrClient do
   # config.yml is excluded from this repo, you must provide your own keys for deveopment purposes.
-  let(:config) { YAML.load_file(File.dirname(__FILE__) + "/wp2tumblr/config_spec.yml") }
-  let(:client) { Wp2tumblr::TumblrClient.new(config["tumblr_consumer_key"], config["tumblr_secret_key"], config["oauth_token"], config["oauth_token_secret"]) }
-  let(:file) { File.open(File.dirname(__FILE__) + "/wp2tumblr/wordpress_format.xml") }
+  # let(:config) { YAML.load_file(File.dirname(__FILE__) + "/wp2tumblr/config_spec.yml") }
+  # let(:client) { Wp2tumblr::TumblrClient.new(config["tumblr_consumer_key"], config["tumblr_secret_key"], config["oauth_token"], config["oauth_token_secret"]) }
+  # let(:file) { File.open(File.dirname(__FILE__) + "/wp2tumblr/wordpress_format.xml") }
 
-  describe "initialize" do
-    it "should return an instance of itself" do
-      client.should_not be_nil
-    end
-  end
+  # describe "initialize" do
+  #   it "should return an instance of itself" do
+  #     client.should_not be_nil
+  #   end
+  # end
 
-  describe "authenticate" do
-    it "should complete the oauth protocol with Tumblr" do
-      tumblr_client = client.connect
-      tumblr_client.should_not be_nil
-    end
-  end
+  # describe "authenticate" do
+  #   it "should complete the oauth protocol with Tumblr" do
+  #     tumblr_client = client.connect
+  #     tumblr_client.should_not be_nil
+  #   end
+  # end
 
-  describe "text_posts" do
-    it "should post text posts to the Tumblr api" do 
-      posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
-      client.connect
-      client.text_posts(config["tumblr_blog_name"] ,posts)
+  # describe "text_posts" do
+  #   it "should post text posts to the Tumblr api" do 
+  #     posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
+  #     client.connect
+  #     client.text_posts(config["tumblr_blog_name"] ,posts)
+  #   end
+  # end
+end
+
+describe Wp2tumblr::Config do
+  it "saves API credentials to a YAML file." do
+    api_config = {
+      :consumer_key => "CONSUMER_KEY",
+      :consumer_secret => "CONSUMER_SECRET",
+      :oauth_token => "OAUTH_TOKEN",
+      :oauth_token_secret => "OAUTH_TOKEN_SECRET"
+    }
+
+    File.open(File.join ENV['HOME'], '.wp2tumblr_spec', "w") do |f|
+      f.write api_config.to_yaml
     end
   end
 end
