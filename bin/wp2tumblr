@@ -28,7 +28,7 @@ end
 opt_parser.parse!
 
 case ARGV[0]
-when "text"
+when "text"l
   puts "Posting text posts with the options: #{options.inspect}"
 else
   puts opt_parser
@@ -85,8 +85,6 @@ else
   api_config[:oauth_token] = access_token.token
   api_config[:oauth_token_secret] = access_token.secret
 
-  File.open(tumblr_config_path, "w") do |f|
-    f.write api_config.to_yaml
-  end
+  Wp2tumblr::Config.save_api_credentials(api_config, ".wp2tumblr")
 
 end
