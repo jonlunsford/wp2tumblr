@@ -20,7 +20,7 @@ module Wp2tumblr
       items = get_file_contents(file)
       @posts = []
       items.to_enum.with_index(0) do |item, i|
-        @posts[i] = {title: item.at_xpath("title").text, content: parse_images(item.at_xpath("content:encoded").text), created_at: item.at_xpath("pubDate").text}
+        @posts[i] = {title: item.at_xpath("title").text, content: self.parse_images(item.at_xpath("content:encoded").text), created_at: item.at_xpath("pubDate").text}
       end
       @posts
     end

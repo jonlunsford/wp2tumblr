@@ -28,7 +28,7 @@ end
 opt_parser.parse!
 
 case ARGV[0]
-when "text"l
+when "text"
   puts "Posting text posts with the options: #{options.inspect}"
 else
   puts opt_parser
@@ -40,15 +40,15 @@ if File.exists?(tumblr_config_path)
 
   config = YAML.load_file tumblr_config_path
   client = Wp2tumblr::TumblrClient.new(config["consumer_key"], config["consumer_secret"], config["oauth_token"], config["oauth_token_secret"])
-  file = File.open(options[:file]) if File.exists?(options[:file])
+  file = File.open(options[:file]) if options[:file] and File.exists?(options[:file])
   
-  if client.connect
-    puts "Successfully authenticated with Tumblr!"
-  else 
-    puts "There was an error authenticating with Tumblr. Please check #{tumblr_config_path} and make sure your credentials are correct."
-  end
-
   if ARGV[0] === "text"
+    if client.connect
+      puts "Successfully authenticated with Tumblr!"
+    else 
+      puts "There was an error authenticating with Tumblr. Please check #{tumblr_config_path} and make sure your credentials are correct."
+    end
+
     if file
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
       client.text_posts(options[:blog_name], posts)
@@ -86,5 +86,7 @@ else
   api_config[:oauth_token_secret] = access_token.secret
 
   Wp2tumblr::Config.save_api_credentials(api_config, ".wp2tumblr")
+
+  puts "Credentials saved, run 'wp2tumblr' again"
 
 end
