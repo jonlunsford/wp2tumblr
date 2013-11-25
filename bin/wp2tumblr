@@ -13,6 +13,7 @@ opt_parser = OptionParser.new do |opt|
   opt.separator ""
   opt.separator "Commands"
   opt.separator "    text: upload posts as type 'text'"
+  opt.separator "    config: configure your Tumblr API credentials"
   opt.separator ""
   opt.separator "Options"
 
@@ -27,14 +28,37 @@ end
 
 opt_parser.parse!
 
-case ARGV[0]
-when "text"
-  puts "Posting text posts with the options: #{options.inspect}"
-else
-  puts opt_parser
-end
+puts opt_parser unless ARGV[0]
 
 tumblr_config_path = File.join ENV['HOME'], '.wp2tumblr'
+
+if ARGV[0] === "config"
+  api_config = {}
+  puts "Register an application at: #{site}/oauth/apps" 
+
+  print "OAuth Consumer key: "
+  api_config[:consumer_key] = $stdin.gets.chomp
+
+  print "OAuth Consumer secret: "
+  api_config[:consumer_secret] = $stdin.gets.chomp
+
+  consumer = OAuth::Consumer.new(api_config[:consumer_key], api_config[:consumer_secret], :site => site)
+  request_token = consumer.get_request_token :exclude_callback => true
+
+  puts request_token.authorize_url
+
+  puts "After you have received your oauth_verifier, paste it below."
+  puts "OAuth Verifier: "
+  api_config[:verifier] = $stdin.gets.chomp
+
+  access_token = request_token.get_access_token :oauth_verifier => api_config[:verifier]
+  api_config[:oauth_token] = access_token.token
+  api_config[:oauth_token_secret] = access_token.secret
+
+  Wp2tumblr::Config.save_api_credentials(api_config, ".wp2tumblr")
+
+  puts "Credentials saved, run 'wp2tumblr COMMAND [OPTIONS]' again"
+end
 
 if File.exists?(tumblr_config_path)
 
@@ -45,6 +69,7 @@ if File.exists?(tumblr_config_path)
   if ARGV[0] === "text"
     if client.connect
       puts "Successfully authenticated with Tumblr!"
+      puts "Posting text posts with the options: #{options.inspect}"
     else 
       puts "There was an error authenticating with Tumblr. Please check #{tumblr_config_path} and make sure your credentials are correct."
     end
@@ -58,35 +83,7 @@ if File.exists?(tumblr_config_path)
   end
 
 else
-  api_config = {}
-
   puts ""
   puts "You need to configure your Tumblr API credentials."
-  puts "Register an application at: #{site}/oauth/apps"
-  
-  print "OAuth Consumer key: "
-  api_config[:consumer_key] = gets.chomp
-
-  print "OAuth Consumer secret: "
-  api_config[:consumer_secret] = gets.chomp
-
-  consumer = OAuth::Consumer.new(api_config[:consumer_key], api_config[:consumer_secret], :site => site)
-  request_token = consumer.get_request_token :exclude_callback => true
-
-  puts ""
-
-  puts request_token.authorize_url
-
-  puts "After you have received your oauth_verifier, paste it below."
-  puts "OAuth Verifier: "
-  api_config[:verifier] = gets.chomp
-
-  access_token = request_token.get_access_token :oauth_verifier => api_config[:verifier]
-  api_config[:oauth_token] = access_token.token
-  api_config[:oauth_token_secret] = access_token.secret
-
-  Wp2tumblr::Config.save_api_credentials(api_config, ".wp2tumblr")
-
-  puts "Credentials saved, run 'wp2tumblr' again"
-
+  puts "run 'wp2tumblr config'"
 end
