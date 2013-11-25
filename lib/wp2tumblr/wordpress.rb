@@ -20,7 +20,7 @@ module Wp2tumblr
       items = get_file_contents(file)
       @posts = []
       items.to_enum.with_index(0) do |item, i|
-        @posts[i] = {title: item.at_xpath("title").text, content: self.parse_images(item.at_xpath("content:encoded").text), created_at: item.at_xpath("pubDate").text}
+        @posts[i] = {title: item.at_xpath("title").text, content: parse_images(item.at_xpath("content:encoded")), created_at: item.at_xpath("pubDate").text}
       end
       @posts
     end
@@ -88,7 +88,7 @@ module Wp2tumblr
     end
 
     def self.parse_images(post_content)
-      html = Nokogiri::HTML(post_content)
+      html = post_content
       html.css("img").each do |image|
         begin
           encoded_image = Base64.encode64(open(image['src']) {|io| io.read})
@@ -97,7 +97,7 @@ module Wp2tumblr
           next
         end
         file_extension = image['src'][/\.[^.]*$/].split('.')[1]
-        image['src'] = "data:image/#{file_extension};base64,#{encoded_image}"
+        image['src'] = "data:image/#{file_extension};base64,#{encoded_image}" if encoded_image
       end
       html
     end
