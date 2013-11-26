@@ -53,8 +53,8 @@ describe Wp2tumblr::Wordpress do
   describe ".parse_images" do
     it "Encodes images as base64" do
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
-      post = Wp2tumblr::Wordpress.parse_images(posts[0][:content])
-      post.should include('base64')
+      post = Nokogiri::HTML(posts[0][:content].text)
+      Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
     end
   end
 end
@@ -82,7 +82,7 @@ describe Wp2tumblr::TumblrClient do
     it "should post text posts to the Tumblr api" do 
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
       client.connect
-      client.text_posts(config["tumblr_blog_name"] ,posts)
+      client.text_posts(config["tumblr_blog_name"], posts)
     end
   end
 end
