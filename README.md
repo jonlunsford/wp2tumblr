@@ -29,7 +29,7 @@ The `-f` option is the absolute path to your wordpress export file, ex. `~/Downl
 `wp2tumblr` will sleep one second between each post to not overload the Tumblr api. You will also see feedback stating how many posts were parsed from the wordpress export file as well as the title of each post that is currently being submitted to the Tumblr api.
 
 ## Changelog
-- **Version 0.1.1:** Minor Feature, added `config` command
+- **Version 0.1.1:** Refactored config process
 - **Version 0.1.0:** Minor Feature, added Base64 encoding of images
 - **Version 0.0.1:** Initial Release
 
