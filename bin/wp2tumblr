@@ -35,8 +35,7 @@ tumblr_config_path = File.join ENV['HOME'], '.wp2tumblr'
 
 if ARGV[0] === "server"
   puts "starting sinatra server, register 'http://localhost:9292/callback' as your apps' callback url."
-  puts ENV["GEM_HOME"]
-  # system("rackup -Ilib #{File.join File.dirname(__FILE__), "..", "lib", "server"}/config.ru")
+  system("rackup -Ilib #{File.join File.dirname(__FILE__), "..", "lib", "server"}/config.ru")
 end
 
 if ARGV[0] === "config"

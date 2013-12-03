@@ -1,3 +1,3 @@
 $:.unshift File.expand_path("../", __FILE__)
-require './server'
+require './server_server'
 run Sinatra::Application
