@@ -15,6 +15,13 @@ Before you will be able to import your posts into Tumblr you will need to config
 
 You will be asked to register your application, provide your application's secret and public keys, and obtain an oauth_verifier token.
 
+### Server
+`wp2tumblr` includes a small Sinatra server to aid in collecting your oauth_verifier token. When you rigister your application just give it the callback url `http://localhost:9292/callback`, open up a seprate terminal window or session and run:
+
+    $ wp2tumblr server
+
+Now when you visit the redirect url your are given from `wp2tumblr config` you will see the oauth_verifier in your console.
+
 ### Import
 Once you have completed the config process simply run the following command:
 
