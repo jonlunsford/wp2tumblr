@@ -20,7 +20,14 @@ module Wp2tumblr
       items = get_file_contents(file)
       @posts = []
       items.to_enum.with_index(0) do |item, i|
-        @posts[i] = {title: item.at_xpath("title").text, content: parse_images(item.at_xpath("content:encoded")), created_at: item.at_xpath("pubDate").text}
+        @posts[i] = {
+            title: item.at_xpath("title").text.sub(/\[photos?\] /i, ''),
+            body: parse_images(item.at_xpath("content:encoded")),
+            date: item.at_xpath("pubDate").text,
+            tags: get_post_meta(item, :tag).join(','),
+            slug: item.at_xpath('wp:post_name').content,
+            state: item.at_xpath('wp:status').content == 'publish' ? 'published' : 'draft'
+        }
       end
       @posts
     end
@@ -88,7 +95,10 @@ module Wp2tumblr
     end
 
     def self.parse_images(post_content)
-      html = post_content
+      #data uris have a maximum size; this strategy might only work for small files
+      #http://stackoverflow.com/questions/695151/data-protocol-url-size-limitations
+
+      html = Nokogiri::HTML::fragment(post_content.content)
       html.css("img").each do |image|
         begin
           encoded_image = Base64.encode64(open(image['src']) {|io| io.read})
@@ -99,7 +109,7 @@ module Wp2tumblr
         file_extension = image['src'][/\.[^.]*$/].split('.')[1]
         image['src'] = "data:image/#{file_extension};base64,#{encoded_image}" if encoded_image
       end
-      html
+      html.to_s
     end
 
     private 
