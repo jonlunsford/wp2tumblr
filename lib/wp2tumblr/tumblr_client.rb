@@ -27,7 +27,7 @@ module Wp2tumblr
       puts "#{posts.count} posts found..."
       posts.each do |post|
         puts "Now posting: #{post[:title]}"
-        @client.text(blog_name, {:title => post[:title], :body => post[:content], :date => post[:created_at]})
+        @client.text(blog_name, post)
         sleep 1
       end
     end
