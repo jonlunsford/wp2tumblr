@@ -21,7 +21,7 @@ module Wp2tumblr
       @posts = []
       items.to_enum.with_index(0) do |item, i|
         @posts[i] = {
-            title: item.at_xpath("title").text.sub(/\[photos?\] /i, ''),
+            title: item.at_xpath("title").text,
             body: parse_images(item.at_xpath("content:encoded")),
             date: item.at_xpath("pubDate").text,
             tags: get_post_meta(item, :tag).join(','),
