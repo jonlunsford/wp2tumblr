@@ -53,8 +53,7 @@ describe Wp2tumblr::Wordpress do
   describe ".parse_images" do
     it "Encodes images as base64" do
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
-      post = Nokogiri::HTML(posts[0][:content].text)
-      Wp2tumblr::Wordpress.parse_images(post).to_s.should include('base64')
+      posts[0][:body].should include('base64')
     end
   end
 end
