@@ -44,7 +44,7 @@ The `-f` option is the absolute path to your wordpress export file, ex. `~/Downl
 - **Version 0.1.0:** Minor Feature, added Base64 encoding of images
 - **Version 0.0.1:** Initial Release
 
-## Contributers
+## Contributors
 - [@apeckham](https://github.com/apeckham)
 
 ## Contributing
