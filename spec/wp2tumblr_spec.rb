@@ -50,10 +50,11 @@ describe Wp2tumblr::Wordpress do
     end
   end
 
+  require 'pry'
   describe ".parse_images" do
     it "Encodes images as base64" do
       posts = Wp2tumblr::Wordpress.parse_xml(file, :posts)
-      post = posts[0][:content]
+      post = posts[0][:body]
       post.to_s.should include('base64')
     end
   end
